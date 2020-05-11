@@ -37,24 +37,24 @@ public:
     // using stack method
     int getMinimumDifferenceWithStack(TreeNode* root)
     {
-        int pre = -1;
+        long int pre = INT_MIN; //如果只是int 会导致 p->val - pre 为INT_MIN, 因为这是int能表示的最小值
         stack<TreeNode*> stack;
         int res = INT_MAX;
-        while(root != NULL || !stack.empty())
+        TreeNode* p = root;
+        while(p != NULL || !stack.empty())
         {
-            while(root != NULL) {
-                stack.push(root);
-                root = root->left;
+            while(p != NULL) {
+                stack.push(p);
+                p = p->left;
             }
-            root = stack.top();
+            p = stack.top();
             stack.pop();
-
-            if(res > root->val - pre)
+            if(res > (p->val - pre))
             {
-                res = root->val- pre;
+                res = p->val - pre;
             }
-            pre = root->val;
-            root = root->right;
+            pre = p->val;
+            p= p->right;
         }
             return res;
     }
